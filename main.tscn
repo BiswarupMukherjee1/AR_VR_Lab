@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://2wap0283yk0r"]
+
+[ext_resource type="Script" uid="uid://cc8n3086pvl18" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cs84qhhybe7i2" path="res://xr_origin_3d.tscn" id="3_xrorigin"]
+[ext_resource type="PackedScene" path="res://bat.tscn" id="4_bat"]
+[ext_resource type="PackedScene" path="res://restart_button.tscn" id="5_button"]
+[ext_resource type="FontFile" uid="uid://cyxhh7ddkn62q" path="res://fonts/Montserrat-Medium.ttf" id="6_font"]
+[ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="7_score"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_et4g5"]
+albedo_color = Color(0.9098039, 0.7137255, 0.9764706, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h73ia"]
+material = SubResource("StandardMaterial3D_et4g5")
+
+[sub_resource type="Curve3D" id="Curve3D_ig7tw"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -21.193634, 0, -22.580132, 0, 0, 0, 0, 0, 0, 16.241852, 0, -16.63799),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="Main" type="Node" unique_id=1807316678]
+script = ExtResource("1_0xm2m")
+mob_scene = ExtResource("2_h2yge")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=82058623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=614838902]
+shape = SubResource("BoxShape3D_7dm0k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1170830578]
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2133141374]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 48, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" parent="." instance=ExtResource("3_xrorigin")]
+
+[node name="Bat" parent="." instance=ExtResource("4_bat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 1, -0.5)
+
+[node name="ScoreLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -27)
+pixel_size = 0.03
+outline_size = 16
+text = "Score: 0"
+font = ExtResource("6_font")
+font_size = 96
+script = ExtResource("7_score")
+
+[node name="RestartButton" parent="." instance=ExtResource("5_button")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="Cylinders" type="Node3D" parent="." unique_id=1186850846]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders" unique_id=843319739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.647644, 0, -22.657276)
+mesh = SubResource("CylinderMesh_h73ia")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders" unique_id=1549667532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.352356, 0, 14.342724)
+mesh = SubResource("CylinderMesh_h73ia")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders" unique_id=1255161666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.352356, 0, -16.657276)
+mesh = SubResource("CylinderMesh_h73ia")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders" unique_id=1558948048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.647644, 0, 16.342724)
+mesh = SubResource("CylinderMesh_h73ia")
+
+[node name="SpawnPath" type="Path3D" parent="." unique_id=2113413437]
+curve = SubResource("Curve3D_ig7tw")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath" unique_id=1543608362]
+transform = Transform3D(-0.99538124, 0, -0.09600128, 0, 1, 0, 0.09600128, 0, -0.99538124, -21.193634, 0, -22.580132)
+
+[node name="MobTimer" type="Timer" parent="." unique_id=433592315]
+wait_time = 1.5
+autostart = true
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
