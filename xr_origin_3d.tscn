@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cs84qhhybe7i2"]
+
+[ext_resource type="Script" uid="uid://cdi665vd14ybl" path="res://xr_origin_3d.gd" id="1_vwqiv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_et4g5"]
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_ogtxb"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tpwpr"]
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_h73ia"]
+radius = 0.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tpwpr"]
+height = 1.7
+
+[node name="XROrigin3D" type="XROrigin3D" unique_id=2043506950]
+script = ExtResource("1_vwqiv")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=2049590962]
+
+[node name="LeftHand" type="XRController3D" parent="." unique_id=164062341]
+tracker = &"left_hand"
+
+[node name="Area3D" type="Area3D" parent="LeftHand" unique_id=277264046]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftHand/Area3D" unique_id=1367754080]
+shape = SubResource("SphereShape3D_et4g5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHand/Area3D" unique_id=2017499524]
+mesh = SubResource("SphereMesh_ogtxb")
+
+[node name="RightHand" type="XRController3D" parent="." unique_id=599895420]
+tracker = &"right_hand"
+
+[node name="Area3D" type="Area3D" parent="RightHand" unique_id=1273117781]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHand/Area3D" unique_id=274024063]
+shape = SubResource("SphereShape3D_tpwpr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightHand/Area3D" unique_id=1361223765]
+mesh = SubResource("SphereMesh_h73ia")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1462596671]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=478180887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_tpwpr")
