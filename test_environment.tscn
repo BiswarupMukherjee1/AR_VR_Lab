@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://ckjym22tdcqyx"]
+
+[ext_resource type="Script" uid="uid://d1uw0wo7143kf" path="res://test_environment.gd" id="1_mdi38"]
+[ext_resource type="Script" uid="uid://dfvioo5g8ibul" path="res://start_button.gd" id="2_hu1ts"]
+[ext_resource type="PackedScene" uid="uid://cs84qhhybe7i2" path="res://xr_origin_3d.tscn" id="3_xrorg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oyxwl"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ykjp"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hu1ts"]
+size = Vector3(1, 0.1, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mdi38"]
+size = Vector3(1, 0.1, 0.6)
+
+[node name="TestEnvironment" type="Node3D" unique_id=1393345952]
+script = ExtResource("1_mdi38")
+
+[node name="Ground" type="Area3D" parent="." unique_id=295669828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=244507657]
+mesh = SubResource("BoxMesh_oyxwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1774730075]
+shape = SubResource("BoxShape3D_3ykjp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1915755694]
+transform = Transform3D(1, 0, 0, 0, 0.38211903, 0.9241131, 0, -0.9241131, 0.38211903, 0, 3.3324652, 0)
+
+[node name="StartButton" type="Area3D" parent="." unique_id=1167465803 groups=["button"]]
+transform = Transform3D(1, 0, 0, 0, -0.25001845, -0.9682411, 0, 0.9682411, -0.25001845, 0.079277515, 1.610867, -9.336124)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_hu1ts")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StartButton" unique_id=1856423078]
+transform = Transform3D(1, 0, 0, 0, 0.9988214, 0.04853885, 0, -0.04853885, 0.9988214, 0, 0, 0)
+mesh = SubResource("BoxMesh_hu1ts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartButton" unique_id=406385317]
+shape = SubResource("BoxShape3D_mdi38")
+
+[node name="Label3D" type="Label3D" parent="StartButton" unique_id=744212879]
+transform = Transform3D(1, 0, 0, 0, -0.15805501, 0.98743033, 0, -0.98743033, -0.15805501, 0, 0.06157303, -0.01589942)
+modulate = Color(0, 0, 0, 1)
+text = "Click here!"
+font_size = 40
+outline_size = 0
+
+[node name="XROrigin3D" parent="." unique_id=1820463520 instance=ExtResource("3_xrorg")]
+
+[connection signal="clicked" from="StartButton" to="." method="_on_start_button_clicked"]

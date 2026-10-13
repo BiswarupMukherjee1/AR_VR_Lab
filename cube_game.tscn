@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://hah1tbh67hij"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2b0jr"]
+albedo_color = Color(0.5036074, 0.37943912, 0.20910752, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2b0jr"]
+material = SubResource("StandardMaterial3D_2b0jr")
+size = Vector3(3, 0.15, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2b0jr"]
+size = Vector3(3, 0.15, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ia8pg"]
+size = Vector3(0.2, 0.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ci8ie"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_shi44"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="CubeGame" type="Node3D" unique_id=2109282276]
+
+[node name="Table" type="StaticBody3D" parent="." unique_id=1792978441]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table" unique_id=1799340014]
+transform = Transform3D(1, -9.5433985e-05, 0, 9.5433985e-05, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("BoxMesh_2b0jr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table" unique_id=694463389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("BoxShape3D_2b0jr")
+
+[node name="Feet" type="Node3D" parent="Table" unique_id=2104245970]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Table/Feet" unique_id=1245539838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.4, 0.75)
+mesh = SubResource("BoxMesh_ia8pg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table/Feet" unique_id=2061888887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.4, -0.75)
+mesh = SubResource("BoxMesh_ia8pg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Table/Feet" unique_id=1183981661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0.4, -0.75)
+mesh = SubResource("BoxMesh_ia8pg")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Table/Feet" unique_id=1569614520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0.4, 0.75)
+mesh = SubResource("BoxMesh_ia8pg")
+
+[node name="Cube" type="Area3D" parent="." unique_id=98614299 groups=["pickable"]]
+transform = Transform3D(0.8366305, 0, -0.54776764, 0, 1, 0, 0.54776764, 0, 0.8366305, 0, 0.975, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube" unique_id=1963528886]
+shape = SubResource("BoxShape3D_ci8ie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cube" unique_id=1409265231]
+mesh = SubResource("BoxMesh_shi44")

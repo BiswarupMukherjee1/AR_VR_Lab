@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pointer"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_pointer"]
+material = SubResource("StandardMaterial3D_pointer")
+radius = 0.05
+height = 0.1
+
+[node name="Pointer" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_pointer")
