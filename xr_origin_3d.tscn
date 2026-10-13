@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://cs84qhhybe7i2"]
+
+[ext_resource type="Script" uid="uid://cdi665vd14ybl" path="res://xr_origin_3d.gd" id="1_vwqiv"]
+[ext_resource type="Script" uid="uid://dpaahcgy3hy6f" path="res://left_hand.gd" id="2_left"]
+[ext_resource type="Script" uid="uid://b3sd5aislpehv" path="res://right_hand.gd" id="3_right"]
+[ext_resource type="Shader" uid="uid://cf2vhcfoatviw" path="res://vignette.gdshader" id="4_vignette"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+render_priority = 100
+shader = ExtResource("4_vignette")
+
+[sub_resource type="QuadMesh" id="QuadMesh_vignette"]
+material = SubResource("ShaderMaterial_vignette")
+size = Vector2(2, 2)
+subdivide_width = 5
+subdivide_depth = 5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_et4g5"]
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_ogtxb"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tpwpr"]
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_h73ia"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ray"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ray"]
+material = SubResource("StandardMaterial3D_ray")
+top_radius = 0.002
+bottom_radius = 0.008
+height = 1.0
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tpwpr"]
+height = 1.7
+
+[node name="XROrigin3D" type="XROrigin3D" unique_id=2043506950]
+script = ExtResource("1_vwqiv")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=2049590962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="VectionReductor" type="MeshInstance3D" parent="XRCamera3D" unique_id=1820463530]
+visible = false
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_vignette")
+
+[node name="LeftHand" type="XRController3D" parent="." unique_id=164062341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+tracker = &"left_hand"
+script = ExtResource("2_left")
+
+[node name="Area3D" type="Area3D" parent="LeftHand" unique_id=277264046]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftHand/Area3D" unique_id=1367754080]
+shape = SubResource("SphereShape3D_et4g5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHand/Area3D" unique_id=2017499524]
+mesh = SubResource("SphereMesh_ogtxb")
+
+[node name="RayCast3D" type="RayCast3D" parent="LeftHand" unique_id=1820463531]
+target_position = Vector3(0, 0, -10)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="RayVisual" type="Node3D" parent="LeftHand/RayCast3D" unique_id=1820463532]
+visible = false
+
+[node name="RayMesh" type="MeshInstance3D" parent="LeftHand/RayCast3D/RayVisual" unique_id=1820463533]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.5)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ray")
+
+[node name="RightHand" type="XRController3D" parent="." unique_id=599895420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"
+script = ExtResource("3_right")
+
+[node name="Area3D" type="Area3D" parent="RightHand" unique_id=1273117781]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHand/Area3D" unique_id=274024063]
+shape = SubResource("SphereShape3D_tpwpr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightHand/Area3D" unique_id=1361223765]
+mesh = SubResource("SphereMesh_h73ia")
+
+[node name="RayCast3D" type="RayCast3D" parent="RightHand" unique_id=1820463517]
+target_position = Vector3(0, 0, -10)
+collision_mask = 4
+collide_with_areas = true
+
+[node name="RayVisual" type="Node3D" parent="RightHand/RayCast3D" unique_id=1820463518]
+visible = false
+
+[node name="RayMesh" type="MeshInstance3D" parent="RightHand/RayCast3D/RayVisual" unique_id=1820463519]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.5)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ray")
+
+[node name="Body" type="Area3D" parent="." unique_id=1462596671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body" unique_id=478180887]
+shape = SubResource("CapsuleShape3D_tpwpr")
